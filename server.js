@@ -307,6 +307,3 @@ function updateEmployeeRole() {
     })
 }
 
-        ]);
-    });
-}
