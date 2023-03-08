@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const cTable = require('console.table');
 const { default: inquirer } = require('inquirer');
 const { default: Choices } = require('inquirer/lib/objects/choices');
+const Connection = require('mysql2/typings/mysql/lib/Connection');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -243,7 +244,68 @@ function addManager(employeeId) {
             }
         ])
         .then((response) => {
-            let query = `Select * FROM employees WHERE ?`
+            let query = `Select * FROM employees WHERE?`
+            connection.query(query, {first_name: response.manager.split(" ")[0]}, (err, result) => {
+                if (err) throw err;
+                
+                let managerId;
+                if (response.manager === "none") {
+                    managerId = null;
+                } else {
+                    managerId = result[0].id;
+                }
+                
+                let query2 = `UPDATE employees SET manager_id=${managerId} WHERE id=${employeeId}`;
+                
+                connection.query(query2, (err, result) => {
+                    if (err) throw err;
+                    console.log("The new employee has been added.");
+                    mainPrompt();
+                });
+            });
+        });
+    });
+};
+
+function updateEmployeeRole() {
+    let query = 'SELECT * FROM employees';
+
+    connection.query(query, (err, result) => {
+        let employeesArry = [];
+        for (let i = 0; i <result.length; i++) {
+            employeesArry.push(result[i].first_name + " " + result[i].last_name);
+        }
+
+        inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'employees',
+                message: 'Whose role do you wish to update?',
+                choices: employeesArry
+            }
+        ])
+        .then((response) => {
+            let query = 'SELECT * FROM employees WHERE ?';
+            connection.query(query, {first_name: response.employees.split("")[0]}, (err, result) => {
+                if (err) throw err;
+                
+                let employeeIdNum = result[0].id;
+                let query2 = 'SELECT * FROM roles';
+                connection.query(query2, (err, result) => {
+                    let titlesArry = [];
+                    for (let i = 0; i < result.length; i++) {
+                        titlesArry.push(result[i].employee_title);
+                    }
+                    function titleSet(arr) {
+                        return [...new Set(arr)];
+                    }
+                    console.log(titleSet(titlesArry))
+                })
+            })
+        })
+    })
+}
 
         ]);
     });
