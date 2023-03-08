@@ -64,7 +64,7 @@ function viewAllDept() {
         mainPrompt();
 
     });
-};
+ };
 
 function viewAllRoles() {
     let query = `SELECT roles.id, roles.employee_title AS title, departments.dept_name AS department, roles.salary'
