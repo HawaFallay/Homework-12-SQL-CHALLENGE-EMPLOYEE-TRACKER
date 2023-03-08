@@ -12,9 +12,9 @@ Homework 12- SQL Challenge: Employee Tracker
 - [QUESTIONS](#questions)
 
 # DESCRPIPTION
- The purpose of this project was to build a command-line application that could organize and 
+ The purpose of this project was to build a command-line application that could organize and
  store employee information using a content management system (CMS). Users can manage
- employee information. This method is very useful can be used to mange many types 
+ employee information. This method is very useful can be used to mange many types
  of databases.
 
 
