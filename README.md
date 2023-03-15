@@ -32,7 +32,7 @@ In the inegrated terminal, type "node server.js". and enjoy!
 
 GitHub Repository: https://github.com/HawaFallay/Homework-12-SQL-CHALLENGE-EMPLOYEE-TRACKER
 
-Video:
+Video:https://youtu.be/xeXB3LU_ONQ
 
 ## QUESTIONS
 
