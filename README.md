@@ -6,10 +6,10 @@ SQL Challenge: Employee Tracker
 
 ## TABLE OF CONTENTS
 
--[DESCRIPTION](#description)
--[INSTALLATION](#installation)
--[LINK](#link)
--[QUESTIONS](#questions)
+-![DESCRIPTION](#description)
+-![INSTALLATION](#installation)
+-![LINK](#link)
+-![QUESTIONS](#questions)
 
 ## DESCRPIPTION
 
@@ -30,9 +30,9 @@ In the inegrated terminal, type "node server.js". and enjoy!
 
 ## LINK
 
-GitHub Repository: https://github.com/HawaFallay/Homework-12-SQL-CHALLENGE-EMPLOYEE-TRACKER
+GitHub Repository: <https://github.com/HawaFallay/Homework-12-SQL-CHALLENGE-EMPLOYEE-TRACKER>
 
-Video:https://youtu.be/xeXB3LU_ONQ
+Video:<https://youtu.be/xeXB3LU_ONQ>
 
 ## QUESTIONS
 
