@@ -1,4 +1,4 @@
-const iquirer = require('inquirer');
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
 const { default: inquirer } = require('inquirer');
@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     database: 'employee_db'
 });
 
-console.log("connected to the employee_db database");
+//console.log("connected to the employee_db database");
 connection.connect(function(err) {
     if(err) throw err;
 })
@@ -301,9 +301,135 @@ function updateEmployeeRole() {
                         return [...new Set(arr)];
                     }
                     console.log(titleSet(titlesArry))
-                })
-            })
-        })
-    })
-}
+
+                    inquirer
+                    .prompt([
+                        {
+                            type: 'list',
+                            name: 'rolelist',
+                            message: 'Which role do you want to assign the selected employee?',
+                            choices: titleSet(titlesArry)
+                        }
+                    ])
+                    .then((response) => {
+                        let query = `SELECT * FROM roles WHERE ?`;
+
+                        connection.query(query, {employee_title: response.roleList}, (err, result) =>{
+                            if (err) throw err;
+
+                            let roleId = result[0].id;
+                            let query2 = `UPDATE employees SET rol_id = ${roleId} WHERE id = ${employeeIdNum}`;
+                            connection.query(query2, (err, result) => {
+                                console.log("The new employee role has been updated.");
+                                mainPrompt();
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+};
+
+function deleteEmployee() {
+    let query = `SELECT * FROM employees`;
+    let employeesArry = [];
+    connection.query(query, (err, result) => {
+        for (let i = 0; i < result.length; i++) {
+            employeesArry.push(result[i].first_name + " " + result[i].last_name);
+        }
+        
+        inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'employees',
+                message: 'Select an employee to remove from database.',
+                choices: employeesArry
+            }
+        ])
+        .then((response) => {
+            let query = `SELECT * FROM employees WHERE ?`;
+            connection.query(query, {first_name: response.employees.split(" ")[0]}, (err, result) => {
+                if (err) throw err;
+                let query2 = `DELETE FROM employees WHERE id = ${result[0].id}`;
+                connection.query(query2, (err, result) => {
+                    if (err) throw err;
+                    console.log(response.employees + "removed from the database.");
+                    mainPrompt();
+                });
+            });
+        });
+    });
+};
+
+function deleteRole() {
+    let query = `SELECT * FROM roles`;
+
+    connection.query(query, (err, result) => {
+        let rolesArry = [];
+        if (err) throw err;
+        for (let i = 0; i < result.length; i ++) {
+            rolesArry.push(result[i].employee_title);
+        }
+        
+        inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'roleList',
+                message: 'Select a role to remove from database.',
+                choices: rolesArry
+            }
+        ])
+        .then((response) => {
+            let query = `SELECT * FROM roles WHERE ?`;
+            connection.query(query, {emplpoyee_title: response.roleList}, (err, result) => {
+                if (err) throw err;
+                let query2 = `DELETE FROM roles WHERE id = ${result[0].id}`;
+                connection.query(query2, (err, result) => {
+                    if (err) throw err;
+                    console.log(response.roleList + "removed from the database.");
+                    mainPrompt();
+                });
+            });
+        });
+    });
+};
+
+function deleteDept() {
+    let query = `SELECT * FROM departments`;
+
+    connection.query(query, (err, result) => {
+        let deptArry = [];
+        if (err) throw err;
+        for (let i = 0; i < result.length; i ++) {
+            deptArry.push(result[i].dept_name);
+        }
+        
+        inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'deptList',
+                message: 'Select a department to remove from database.',
+                choices: deptArry
+            }
+        ])
+        .then((response) => {
+            let query = `SELECT * FROM departments WHERE ?`;
+            connection.query(query, {dept_name: response.deptList}, (err, result) => {
+                if (err) throw err;
+                let query2 = `DELETE FROM departments WHERE id = ${result[0].id}`;
+                connection.query(query2, (err, result) => {
+                    if (err) throw err;
+                    console.log(response.deptList + "removed from the database.");
+                    mainPrompt();
+                });
+            });
+        });
+    });
+};
+
+
 
