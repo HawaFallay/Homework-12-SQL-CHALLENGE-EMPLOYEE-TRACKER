@@ -1,9 +1,9 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
-const { default: inquirer } = require('inquirer');
+//const { default: inquirer } = require('inquirer');
 const { default: Choices } = require('inquirer/lib/objects/choices');
-const Connection = require('mysql2/typings/mysql/lib/Connection');
+//const Connection = require('mysql2/typings/mysql/lib/Connection');
 
 const connection = mysql.createConnection({
     host: 'localhost',
