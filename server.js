@@ -244,7 +244,7 @@ function addManager(employeeId) {
             }
         ])
         .then((response) => {
-            let query = `Select * FROM employees WHERE?`
+            let query = `Select * FROM employees WHERE ?`
             connection.query(query, {first_name: response.manager.split(" ")[0]}, (err, result) => {
                 if (err) throw err;
                 
