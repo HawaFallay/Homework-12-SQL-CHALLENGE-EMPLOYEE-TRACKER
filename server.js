@@ -70,7 +70,7 @@ function viewAllRoles() {
     let query = `SELECT roles.id, roles.employee_title AS title, departments.dept_name AS department, roles.salary
 
     FROM roles 
-    
+
     LEFT JOIN departments ON roles.department_id = department_id`;
 
     connection.query(query, (err, result) => {
@@ -169,7 +169,6 @@ function addRole() {
 
 
 function addEmployee() {
-    
     let query = `SELECT * FROM roles`;
 
     connection.query(query, (err, result) => {
