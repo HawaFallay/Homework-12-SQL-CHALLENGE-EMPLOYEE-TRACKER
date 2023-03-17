@@ -1,5 +1,4 @@
-SELECT roles.id, roles.employee_title, departments.dept_name 
-AS department, roles.salary 
+SELECT roles.id, roles.employee_title, departments.dept_name AS department, roles.salary 
 
 FROM roles
 
